@@ -36,31 +36,32 @@ function mystic_pwd() {
 # =============================================================================
 function mystic_bottom_pwd() {
 
-	local output fullpath
+	local fullpath prefixpath
 
-	output=''
 	fullpath="$(mystic_ellipsify ${MYSTIC_MAXLENGTH_PWD} ${MYSTIC_GLYPH_ELLIPSIS} $(mystic_pwd))"
 
-	output+="${MYSTIC_COLOR_PUNCTUATION} text ${MYSTIC_GLYPH_LB} "
+	mystic_echo ${MYSTIC_COLOR_PUNCTUATION} text "${MYSTIC_GLYPH_LB}" nnl
 
 	if [[ "${#fullpath}" -eq 1 ]]; then
 
-		output+="${MYSTIC_COLOR_PATH_PWD} ${fullpath} "
+		mystic_echo ${MYSTIC_COLOR_PATH_PWD} text "${fullpath}" nnl
 
 	else
 
-		output+="$(mystic_style_filter \
-							"${MYSTIC_COLOR_PATH_PATH}" \
-							"${MYSTIC_COLOR_PATH_PATH}" \
-							"${MYSTIC_COLOR_PATH_PATH}" \
-							"${MYSTIC_COLOR_PUNCTUATION}" \
-							"${fullpath%/*}/") "
+		prefixpath="$(mystic_style_filter \
+								"${MYSTIC_COLOR_PATH_PATH}" \
+								"${MYSTIC_COLOR_PATH_PATH}" \
+								"${MYSTIC_COLOR_PATH_PATH}" \
+								"${MYSTIC_COLOR_PUNCTUATION}" \
+								"${fullpath%/*}/")"
 
-		output+="${MYSTIC_COLOR_PATH_PWD} ${fullpath##*/} "
+		mystic_echo ${prefixpath} nnl
+
+
+		mystic_echo ${MYSTIC_COLOR_PATH_PWD} text "${fullpath##*/}" nnl
 
 	fi
 
-	output+="${MYSTIC_COLOR_PUNCTUATION} text ${MYSTIC_GLYPH_RB} "
+	mystic_echo ${MYSTIC_COLOR_PUNCTUATION} text "${MYSTIC_GLYPH_RB} " nnl
 
-	mystic_echo ${output} nnl
 }
