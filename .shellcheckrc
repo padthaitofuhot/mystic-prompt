@@ -1,4 +1,5 @@
 shell=bash
 source-path=src
 enable=check-unassigned-uppercase
-
+disable=SC2086
+disable=SC2046
