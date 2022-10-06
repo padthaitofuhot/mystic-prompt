@@ -3,7 +3,6 @@ MYSTIC_VERSION="0.0.5i7"
 #===============================================================================
 #
 #    A responsive semantic bash prompt in the style of MysticBBS software.
-#    Copyright (C) 2021 Travis Wichert
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
