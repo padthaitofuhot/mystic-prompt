@@ -1,6 +1,6 @@
 cat src/header.bash >mystic.bash
 cat mystic-config.bash >>mystic.bash
-for srcfile in  terminal.bash \
+for srcfile in  mystic-termlib.bash \
 								filters.bash \
 								utilities.bash \
 								frame-parts.bash \

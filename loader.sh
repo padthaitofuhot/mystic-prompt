@@ -1,6 +1,6 @@
 source src/header.bash
 source mystic-config.bash
-for srcfile in  terminal.bash \
+for srcfile in  mystic-termlib.bash \
 								filters.bash \
 								utilities.bash \
 								frame-parts.bash \
