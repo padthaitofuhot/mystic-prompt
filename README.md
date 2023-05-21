@@ -25,7 +25,7 @@ From top-left to bottom right:
 mkdir ~/.local/lib
 cd ~/.local/lib
 git clone https://github.com/padthaitofuhot/mystic-prompt.git
-printf "%s\n%s\n\n" "# Mystic Prompt" "source ~/.local/lib/mystic.bash" >>~/.bashrc
+printf "%s\n%s\n\n" "# Mystic Prompt" "source ~/.local/lib/mystic-prompt/mystic.bash" >>~/.bashrc
 cd -
 ```
 
