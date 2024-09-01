@@ -1,6 +1,6 @@
 #####
 #
-# Mystic TermLib v1.0.0
+# Mystic TermLib v1.1.1
 # A fast, light, and fluenty bash library for using terminal escape sequences.
 #
 # This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -56,13 +56,20 @@ MYSTIC_TC_CLEAR_LINE="${MYSTIC_TC_ESC}[2K"
 MYSTIC_TC_SCREEN_SAVE="${MYSTIC_TC_ESC}[?47h"
 MYSTIC_TC_SCREEN_LOAD="${MYSTIC_TC_ESC}[?47l"
 MYSTIC_TC_SCREEN_CLEAR="${MYSTIC_TC_ESC}[2J"
+MYSTIC_TC_SAVE_CURSOR="${MYSTIC_TC_ESC}7"
+MYSTIC_TC_LOAD_CURSOR="${MYSTIC_TC_ESC}8"
 
 # Terminal Attribute Codes
 MYSTIC_AT_BOLD="${MYSTIC_TC_ESC}[1m"
-MYSTIC_AT_DIM="${MYSTIC_TC_ESC}[2m"
+MYSTIC_AT_FAINT="${MYSTIC_TC_ESC}[2m"
+MYSTIC_AT_ITALIC="${MYSTIC_TC_ESC}[3m"
 MYSTIC_AT_UNDERLINE="${MYSTIC_TC_ESC}[4m"
 MYSTIC_AT_BLINK="${MYSTIC_TC_ESC}[5m"
-MYSTIC_AT_RESET="${MYSTIC_TC_ESC}[0m"
+MYSTIC_AT_INVERSE="${MYSTIC_TC_ESC}[7m"
+MYSTIC_AT_STRIKETHROUGH="${MYSTIC_TC_ESC}[9m"
+MYSTIC_AT_DOUBLE_UNDERLINE="${MYSTIC_TC_ESC}[21m"
+# includes some non-standard reset sequences for known attributes, such as double-underline
+MYSTIC_AT_RESET="${MYSTIC_TC_ESC}[0m${MYSTIC_TC_ESC}[22m${MYSTIC_TC_ESC}[24m"
 
 ## Color stuff
 MYSTIC_COLOR_PREFIX="${MYSTIC_PC_START}${MYSTIC_TC_ESC}["
@@ -172,11 +179,17 @@ mystic_cursor() {
 	local _print
 	local _pos _row _col
 	local _nl
+	local _reset=true
 
 	_nl="${MYSTIC_TC_NEWLINE}"
 
 	while (($# > 0)); do
 		case "$1" in
+			text)
+				# Quote "your text" to avoid splitting
+				shift
+				_print+="${1}"
+				;;
 			up)
 				# Notes about up, down, right, left, and move/home:
 				#
@@ -205,7 +218,7 @@ mystic_cursor() {
 				[[ $2 == ?(-)+([0-9]) ]] && _pos=$2 && shift
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_ESC}[${_pos}D${MYSTIC_PC_STOP}"
 				;;
-			move | home)
+			move | home | mv)
 				_row=1
 				_col=1
 				[[ $2 == ?(-)+([0-9]) ]] && _row=$2 && shift
@@ -224,7 +237,7 @@ mystic_cursor() {
 			vtab)
 				_print+="${MYSTIC_TC_VTAB}"
 				;;
-			formfeed)
+			formfeed | ff)
 				_print+="${MYSTIC_TC_FORMFEED}"
 				;;
 			return | cr)
@@ -245,17 +258,23 @@ mystic_cursor() {
 			load)
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_SCREEN_LOAD}${MYSTIC_PC_STOP}"
 				;;
-			clearline)
+			clearline | cl)
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_CLEAR_LINE}${MYSTIC_PC_STOP}"
 				;;
-			clearbefore)
+			clearbefore | cb)
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_CLEAR_BEFORE}${MYSTIC_PC_STOP}"
 				;;
-			clearafter)
+			clearafter | ca)
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_CLEAR_AFTER}${MYSTIC_PC_STOP}"
 				;;
 			clearscreen | clear | cls)
 				_print+="${MYSTIC_PC_START}${MYSTIC_TC_SCREEN_CLEAR}${MYSTIC_PC_STOP}"
+				;;
+			savecursor | sc)
+				_print+="${MYSTIC_PC_START}${MYSTIC_TC_SAVE_CURSOR}${MYSTIC_PC_STOP}"
+				;;
+			loadcursor | lc)
+				_print+="${MYSTIC_PC_START}${MYSTIC_TC_LOAD_CURSOR}${MYSTIC_PC_STOP}"
 				;;
 			space | spc)
 				_print+='\x20'
@@ -266,8 +285,6 @@ mystic_cursor() {
 		esac
 		shift
 	done
-
-	_print+="${MYSTIC_PC_START}${MYSTIC_AT_RESET}${MYSTIC_PC_STOP}"
 
 	printf "%b" "${_print}"
 }
@@ -299,6 +316,7 @@ mystic_echo() {
 	local _r _b _g
 	local _color_offset_fg _color_offset_bg
 	local _nl
+	local _reset=true
 
 	_nl="${MYSTIC_TC_NEWLINE}"
 
@@ -306,19 +324,34 @@ mystic_echo() {
 		case "$1" in
 
 			# Basic text control
-			bold)
+			bold | bd)
 				_print+="${MYSTIC_PC_START}${MYSTIC_AT_BOLD}${MYSTIC_PC_STOP}"
 				;;
-			unbold)
-				_print+="${MYSTIC_PC_START}${MYSTIC_AT_DIM}${MYSTIC_PC_STOP}"
+			faint | ft)
+				_print+="${MYSTIC_PC_START}${MYSTIC_AT_FAINT}${MYSTIC_PC_STOP}"
 				;;
-			underline | line)
+			underline | ul)
 				_print+="${MYSTIC_PC_START}${MYSTIC_AT_UNDERLINE}${MYSTIC_PC_STOP}"
+				;;
+			italics | italic | it)
+				_print+="${MYSTIC_PC_START}${MYSTIC_AT_ITALIC}${MYSTIC_PC_STOP}"
+				;;
+			strikethrough | strike)
+				_print+="${MYSTIC_PC_START}${MYSTIC_AT_STRIKETHROUGH}${MYSTIC_PC_STOP}"
+				;;
+			inverse | reverse | inv | rev)
+				_print+="${MYSTIC_PC_START}${MYSTIC_AT_INVERSE}${MYSTIC_PC_STOP}"
+				;;
+			doubleunderline | du)
+				_print+="${MYSTIC_PC_START}${MYSTIC_AT_DOUBLE_UNDERLINE}${MYSTIC_PC_STOP}"
 				;;
 			text)
 				# Quote "your text" to avoid splitting
 				shift
 				_print+="${1}"
+				;;
+			no-reset | nrst)
+				_reset=false
 				;;
 			no-newline | nn | nnl)
 				_nl=''
@@ -433,9 +466,9 @@ mystic_echo() {
 			# 24-bit RGB does it like this: \033[38;R;G;B;128m
 			#
 			# Usage:
-			#     rgb <red> <green> <blue>
-			#			rgb  000     128     255
-			#     rgb   00      80      FF
+			#		rgb <red> <green> <blue>
+			#		rgb  000     128     255
+			#		rgb   00      80      FF
 			# you can use hex or dec because I love you.
 			# num args <3 are interpreted as hex (use 00-FF)
 			# num args >2 are interpreted as dec (use 000-255)
@@ -509,7 +542,9 @@ mystic_echo() {
 		shift
 	done
 
-	_print+="${MYSTIC_PC_START}${MYSTIC_AT_RESET}${MYSTIC_PC_STOP}"
+	if $_reset; then
+		_print+="${MYSTIC_PC_START}${MYSTIC_AT_RESET}${MYSTIC_PC_STOP}"
+	fi
 
 	printf "%b" "${_print}${_nl}"
 }
