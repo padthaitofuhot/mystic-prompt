@@ -1,6 +1,6 @@
 #####
 #
-# Mystic TermLib v1.1.1
+# Mystic TermLib v1.1.2
 # A fast, light, and fluenty bash library for using terminal escape sequences.
 #
 # This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -75,7 +75,7 @@ MYSTIC_AT_RESET="${MYSTIC_TC_ESC}[0m${MYSTIC_TC_ESC}[22m${MYSTIC_TC_ESC}[24m"
 MYSTIC_COLOR_PREFIX="${MYSTIC_PC_START}${MYSTIC_TC_ESC}["
 MYSTIC_COLOR_SUFFIX="m${MYSTIC_PC_STOP}"
 
-# ANSI 16-color Forground
+# ANSI 16-color Foreground
 MYSTIC_FG_BLACK=30
 MYSTIC_FG_RED=31
 MYSTIC_FG_GREEN=32
@@ -128,7 +128,8 @@ function mystic_setup_unicode() {
 # This is broken in many terminals, but maybe it'll work for you.
 # =============================================================================
 mystic_bell() {
-	printf '%s' "${MYSTIC_TC_BELL}"
+	# shellcheck disable=SC2059
+	printf "${MYSTIC_TC_BELL}"
 }
 
 # =============================================================================
