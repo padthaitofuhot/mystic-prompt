@@ -186,6 +186,11 @@ case ${MYSTIC_TERM_SIGNATURE} in
 		MYSTIC_GLYPH_INPUT='∙ '
 		#
 
+		### virtualenv-widget
+		MYSTIC_COLOR_VIRTUALENV_LOW="${MYSTIC_GLOBAL_TEXT_ATTR} xt 030"
+		MYSTIC_COLOR_VIRTUALENV_HIGH="${MYSTIC_GLOBAL_TEXT_ATTR} xt 050"
+		#
+
 		;;
 
 	# Default to 16 color, basic charset

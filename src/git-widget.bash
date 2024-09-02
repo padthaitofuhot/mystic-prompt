@@ -46,7 +46,7 @@ function mystic_git_middle() {
 	output+="$(mystic_git_styled_branch)"
 
 	# idx.notup:4 tree.rm:2 untracked:7
-	output+="$(mystic_git_status_dashboard)"
+	output+="$(mystic_git_status_dashboard) nnl"
 
   mystic_echo ${output}
 }

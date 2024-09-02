@@ -32,16 +32,20 @@ function mystic_evoke_light() {
 		active_virtualenv=$(mystic_check mystic_virtualenv_middle_check)
 		active_git=$(mystic_check mystic_git_middle_check)
 
-		if [ ${active_git} ] || [ ${active_virtualenv} ]; then
+		if [ "${active_git}" = true ] || [ "${active_virtualenv}" = true ]; then
 			mystic_middle_edge
 		fi
 
 		if [ "${active_virtualenv}" = true ]; then
-			mystic_pyenv_middle
+			mystic_virtualenv_middle
 		fi
 
 		if [ "${active_git}" = true ]; then
 			mystic_git_middle
+		fi
+
+		if [ "${active_virtualenv}" = true ]; then
+			printf "\n"
 		fi
 
 		unset active_virtualenv active_git

@@ -46,7 +46,8 @@ function mystic_virtualenv_middle_check() {
 #			- VIRTUAL_ENV_PROMPT
 #			- MYSTIC_COLOR_PUNCTUATION
 #			- MYSTIC_COLOR_USERNAME
-#			- MYSTIC_COLOR_PATH_PATH
+#			- MYSTIC_COLOR_VIRTUALENV_LOW
+#			- MYSTIC_COLOR_VIRTUALENV_HIGH
 #			- MYSTIC_GLYPH_LB
 #			- MYSTIC_GLYPH_RB
 #			- MYSTIC_GLYPH_ELLIPSIS
@@ -60,9 +61,9 @@ function mystic_virtualenv_middle() {
 
 	virtualenv="$(mystic_ellipsify ${MYSTIC_MAXLENGTH_PWD} ${MYSTIC_GLYPH_ELLIPSIS} ${virtualenv_name})"
   virtualenv="$(mystic_style_filter \
-								"${MYSTIC_COLOR_PATH_PATH}" \
-								"${MYSTIC_COLOR_PATH_PATH}" \
-								"${MYSTIC_COLOR_PATH_PATH}" \
+								"${MYSTIC_COLOR_VIRTUALENV_LOW}" \
+								"${MYSTIC_COLOR_VIRTUALENV_LOW}" \
+								"${MYSTIC_COLOR_VIRTUALENV_HIGH}" \
 								"${MYSTIC_COLOR_PUNCTUATION}" \
 								"${virtualenv}")"
 

@@ -218,6 +218,11 @@ case ${MYSTIC_TERM_SIGNATURE} in
 		MYSTIC_GLYPH_INPUT='∙ '
 		#
 
+		### virtualenv-widget
+		MYSTIC_COLOR_VIRTUALENV_LOW="${MYSTIC_GLOBAL_TEXT_ATTR} xt 030"
+		MYSTIC_COLOR_VIRTUALENV_HIGH="${MYSTIC_GLOBAL_TEXT_ATTR} xt 050"
+		#
+
 		;;
 
 	# Default to 16 color, basic charset
@@ -1865,7 +1870,8 @@ function mystic_virtualenv_middle_check() {
 #			- VIRTUAL_ENV_PROMPT
 #			- MYSTIC_COLOR_PUNCTUATION
 #			- MYSTIC_COLOR_USERNAME
-#			- MYSTIC_COLOR_PATH_PATH
+#			- MYSTIC_COLOR_VIRTUALENV_LOW
+#			- MYSTIC_COLOR_VIRTUALENV_HIGH
 #			- MYSTIC_GLYPH_LB
 #			- MYSTIC_GLYPH_RB
 #			- MYSTIC_GLYPH_ELLIPSIS
@@ -1879,9 +1885,9 @@ function mystic_virtualenv_middle() {
 
 	virtualenv="$(mystic_ellipsify ${MYSTIC_MAXLENGTH_PWD} ${MYSTIC_GLYPH_ELLIPSIS} ${virtualenv_name})"
   virtualenv="$(mystic_style_filter \
-								"${MYSTIC_COLOR_PATH_PATH}" \
-								"${MYSTIC_COLOR_PATH_PATH}" \
-								"${MYSTIC_COLOR_PATH_PATH}" \
+								"${MYSTIC_COLOR_VIRTUALENV_LOW}" \
+								"${MYSTIC_COLOR_VIRTUALENV_LOW}" \
+								"${MYSTIC_COLOR_VIRTUALENV_HIGH}" \
 								"${MYSTIC_COLOR_PUNCTUATION}" \
 								"${virtualenv}")"
 
@@ -1940,7 +1946,7 @@ function mystic_git_middle() {
 	output+="$(mystic_git_styled_branch)"
 
 	# idx.notup:4 tree.rm:2 untracked:7
-	output+="$(mystic_git_status_dashboard)"
+	output+="$(mystic_git_status_dashboard) nnl"
 
   mystic_echo ${output}
 }
@@ -2321,16 +2327,20 @@ function mystic_evoke_light() {
 		active_virtualenv=$(mystic_check mystic_virtualenv_middle_check)
 		active_git=$(mystic_check mystic_git_middle_check)
 
-		if [ ${active_git} ] || [ ${active_virtualenv} ]; then
+		if [ "${active_git}" = true ] || [ "${active_virtualenv}" = true ]; then
 			mystic_middle_edge
 		fi
 
 		if [ "${active_virtualenv}" = true ]; then
-			mystic_pyenv_middle
+			mystic_virtualenv_middle
 		fi
 
 		if [ "${active_git}" = true ]; then
 			mystic_git_middle
+		fi
+
+		if [ "${active_virtualenv}" = true ]; then
+			printf "\n"
 		fi
 
 		unset active_virtualenv active_git
