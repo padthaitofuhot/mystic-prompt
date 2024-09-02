@@ -1,5 +1,5 @@
 #===============================================================================
-MYSTIC_VERSION="0.0.5i7.3"
+MYSTIC_VERSION="0.0.5i7.23"
 #===============================================================================
 #
 #    A responsive semantic bash prompt in the style of MysticBBS software.
@@ -2339,7 +2339,7 @@ function mystic_evoke_light() {
 			mystic_git_middle
 		fi
 
-		if [ "${active_virtualenv}" = true ]; then
+		if [ "${active_git}" = true ] || [ "${active_virtualenv}" = true ]; then
 			printf "\n"
 		fi
 
