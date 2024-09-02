@@ -44,7 +44,7 @@ function mystic_evoke_light() {
 			mystic_git_middle
 		fi
 
-		if [ "${active_virtualenv}" = true ]; then
+		if [ "${active_git}" = true ] || [ "${active_virtualenv}" = true ]; then
 			printf "\n"
 		fi
 
