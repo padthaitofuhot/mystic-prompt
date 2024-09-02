@@ -6,6 +6,7 @@ for srcfile in  mystic-termlib.bash \
 								frame-parts.bash \
 								load-graphs-widget.bash \
 								clock-widget.bash \
+								pyenv-widget.bash \
 								git-widget.bash \
 								userhost-widget.bash \
 								pwd-widget.bash \
