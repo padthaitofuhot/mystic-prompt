@@ -26,9 +26,17 @@ function mystic_git_styled_branch() {
 
 
 # =============================================================================
+# Checks if $CWD is a git repository
+# =============================================================================
+function mystic_git_middle_check() {
+	git status --porcelain &> /dev/null
+}
+
+
+# =============================================================================
 # Renders and prints the middle git widget
 # =============================================================================
-function mystic_middle_git() {
+function mystic_git_middle() {
 
 	local output
 
@@ -67,6 +75,7 @@ function mystic_git_branch() {
 		gb="${gb##*/}"
 		loc_rem="$(git rev-list --left-right "${gb}"...origin/"${gb}" --count 2> /dev/null)"
 
+		# shellcheck disable=SC2181
 		if [[ "${?}" -eq 0 ]]; then
 			loc_rem=
 		fi
@@ -91,7 +100,7 @@ function mystic_git_status() {
 
 	local XY X Y out
 
-	while IFS='' read line; do
+	while IFS='' read -r line; do
 
 		XY="${line:0:2}"
 

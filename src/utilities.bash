@@ -33,7 +33,7 @@ function in_ranger() {
 # Arguments:
 # 	str	${@} as list of variables to display
 # =============================================================================
-mystic_ckv() {
+function mystic_ckv() {
 	local arg
 
 	printf '%s\n' "$(mystic_fill 40 "-")" >&2
@@ -51,3 +51,14 @@ mystic_ckv() {
 # ckv() { mystic_ckv $@; }
 
 
+# =============================================================================
+# Abstracts fetching a boolean "value" for check commands
+# =============================================================================
+function mystic_check() {
+	# shellcheck disable=SC2068
+	if ${@}; then
+		echo "true"
+	else
+		echo "false"
+	fi
+}

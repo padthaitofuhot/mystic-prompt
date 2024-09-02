@@ -73,21 +73,22 @@ case ${MYSTIC_TERM_SIGNATURE} in
 
 	# Assume if it can do at least 256color then it
 	# can also do UTF-8.  Same w/ $TRUECOLOR.
-
+  #
 	# Why?
-
+  #
 	# Because *2*0*2*1*, that's why.
-
+  #
 	# Because if you're not spooning with a DEC Alpha
 	# you have probably C-A-F7'd out of your framebuffer
 	# vty, nice though it is to reminisce, back into
-	# present times where we have 256color xterms and
-	# are sufficiently internationalized and inclusive
+	# present times where we have truecolor xterms with
+	# pixel-perfect, high-resolution blitting and are
+	# sufficiently internationalized and inclusive
 	# for GNU/Linux to find itself distributed with
 	# UTF-8 enabled everywhere by default.
-
+  #
 	# My oh my what a time to be alive.
-
+  #
   # I am a unicorn. Behold my glitter.
 
 

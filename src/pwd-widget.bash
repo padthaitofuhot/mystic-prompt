@@ -26,12 +26,12 @@ function mystic_pwd() {
 # Globals:
 # 	get:
 #			MYSTIC_COLOR_PUNCTUATION
+#			MYSTIC_MAXLENGTH_PWD
 #			MYSTIC_COLOR_PATH_PWD
 #			MYSTIC_COLOR_PATH_PATH
 #			MYSTIC_GLYPH_LB
 #			MYSTIC_GLYPH_RB
 #			MYSTIC_GLYPH_ELLIPSIS
-#			MYSTIC_GLYPH_SLASH
 #
 # =============================================================================
 function mystic_bottom_pwd() {

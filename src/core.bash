@@ -27,10 +27,24 @@ function mystic_evoke_light() {
 	}
 
 	function mkmid() {
-		if git status --porcelain &> /dev/null; then
+		local active_git active_virtualenv
+
+		active_virtualenv=$(mystic_check mystic_virtualenv_middle_check)
+		active_git=$(mystic_check mystic_git_middle_check)
+
+		if [ ${active_git} ] || [ ${active_virtualenv} ]; then
 			mystic_middle_edge
-			mystic_middle_git
 		fi
+
+		if [ "${active_virtualenv}" = true ]; then
+			mystic_pyenv_middle
+		fi
+
+		if [ "${active_git}" = true ]; then
+			mystic_git_middle
+		fi
+
+		unset active_virtualenv active_git
 	}
 
 	function mkbot() {
